@@ -13,12 +13,7 @@ pipeline {
                     url: 'https://github.com/raj123raj/my-laravel-app'
             }
         }
-        stage('Environment') {
-            steps {
-                bat 'copy .env.example .env'
-                bat "${PHP_PATH} artisan key:generate --force"
-            }
-        }
+
         stage('Dependencies') {
             steps {
 			 bat 'dir composer.json'  // Verify in workspace
@@ -27,6 +22,12 @@ pipeline {
 				bat 'dir vendor\\autoload.php'  // ✅ Exists
             }
         }
+        stage('Environment') {
+            steps {
+                bat 'copy .env.example .env'
+                bat "${PHP_PATH} artisan key:generate --force"
+            }
+        }		
 		
         stage('Test DB') {
             steps {
